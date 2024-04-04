@@ -1,22 +1,46 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 
 export default function CountryPage() {
   const [countryData, setCountryData] = useState(null)
+  const [borders, setBorders] = useState([])
+
+  const { state } = useLocation()
   const { country } = useParams()
 
+  console.log('state aako xa: ', state)
+
+  function functionToSetCountryData(countryData) {
+    setCountryData(countryData)
+
+    if (countryData.borders) {
+      countryData.borders.map((border) => {
+        fetch(`https://restcountries.com/v3.1/alpha/${border}`)
+          .then((res) => res.json())
+          .then(([data]) => {
+            setBorders((prev) => [...prev, data.name.common])
+          })
+      })
+    }
+  }
+
   useEffect(() => {
+    setBorders([])
+
+    if(state){
+      functionToSetCountryData(state)
+      return
+    }
+
     fetch(`https://restcountries.com/v3.1/name/${country}?fullText=true`)
       .then((res) => res.json())
       .then(([data]) => {
-        setCountryData(data)
+        functionToSetCountryData(data)
       })
-  }, [])
-
-  console.log(countryData)
+  }, [country])
 
   return (
-    <div className="py-12 px-10">
+    <div className="py-12 px-10 h-screen dark:bg-neutral-900 dark:text-white">
       {countryData === null ? (
         'Loading...'
       ) : (
@@ -76,6 +100,23 @@ export default function CountryPage() {
                 {Object.values(countryData.languages).join(', ')}
               </h4>
             </div>
+
+            {borders.length !== 0 && (
+              <div>
+                <span className="font-bold">Borders: </span>
+                {borders.map((border, index) => {
+                  return (
+                    <Link
+                      to={`/${border}`}
+                      key={index}
+                      className="border p-1 m-1"
+                    >
+                      {border}
+                    </Link>
+                  )
+                })}
+              </div>
+            )}
           </div>
         </div>
       )}
