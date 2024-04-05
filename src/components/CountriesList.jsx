@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import Card from './Card'
 
-export default function CountriesList({ searchQuery }) {
+export default function CountriesList({ searchQuery,region }) {
   const [allCountries, setAllCountries] = useState([])
   useEffect(() => {
     fetch('https://restcountries.com/v3.1/all')
@@ -19,6 +19,9 @@ export default function CountriesList({ searchQuery }) {
               return country.name.common
                 .toLowerCase()
                 .includes(searchQuery.toLowerCase())
+            })
+            .filter((country) => {
+              return country.region.toLowerCase().includes(region.toLowerCase())
             })
             .map((country) => {
               return (

@@ -1,15 +1,13 @@
-import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
-import Navbar from './components/Navbar'
+import { Outlet } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import useDark from "../hooks/useDark";
 
 export default function App() {
-  const [isDark, setIsDark] = useState(
-    JSON.parse(localStorage.getItem('darkXa')) || false
-  )
+  const [isDark, setIsDark] = useDark();
   return (
-    <div className={`${isDark === true ? 'dark' : ''}`}>
+    <div className={`${isDark === true ? "dark" : ""}`}>
       <Navbar isDark={isDark} setIsDark={setIsDark} />
       <Outlet />
     </div>
-  )
+  );
 }
