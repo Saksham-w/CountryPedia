@@ -1,15 +1,15 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import Card from './Card'
+import React, { Fragment, useEffect, useState } from "react";
+import Card from "./Card";
 
-export default function CountriesList({ searchQuery,region }) {
-  const [allCountries, setAllCountries] = useState([])
+export default function CountriesList({ searchQuery, region }) {
+  const [allCountries, setAllCountries] = useState([]);
   useEffect(() => {
-    fetch('https://restcountries.com/v3.1/all')
+    fetch("https://restcountries.com/v3.1/all")
       .then((res) => res.json())
       .then((data) => {
-        setAllCountries(data)
-      })
-  }, [])
+        setAllCountries(data);
+      });
+  }, []);
   return (
     <div className="">
       {allCountries.length !== 0 ? (
@@ -18,10 +18,12 @@ export default function CountriesList({ searchQuery,region }) {
             .filter((country) => {
               return country.name.common
                 .toLowerCase()
-                .includes(searchQuery.toLowerCase())
+                .includes(searchQuery.toLowerCase());
             })
             .filter((country) => {
-              return country.region.toLowerCase().includes(region.toLowerCase())
+              return country.region
+                .toLowerCase()
+                .includes(region.toLowerCase());
             })
             .map((country) => {
               return (
@@ -34,12 +36,12 @@ export default function CountriesList({ searchQuery,region }) {
                     region={country.region}
                   />
                 </Fragment>
-              )
+              );
             })}
         </div>
       ) : (
-        'Loading...'
+        "Loading..."
       )}
     </div>
-  )
+  );
 }
