@@ -16,7 +16,7 @@ export default function Navbar({ isDark, setIsDark }) {
     >
       <div
         className={`${
-          isHomepage ? "h-24 w-24 sm:h-32 sm:w-32" : "h-12 w-12 sm:h-16 sm:w-16"
+          isHomepage ? "h-24 w-24 sm:h-32 sm:w-32" : "h-8 w-12 sm:h-16 sm:w-16 mt-8 sm:mt-0"
         } ml-0 sm:ml-10`}
       >
         <img src={Logo} alt="CountryPedia Logo" className="object-contain" />

@@ -38,7 +38,7 @@ export default function CountryPage() {
   }, [country]);
 
   return (
-    <div className="py-12 px-10 h-screen bg-white dark:bg-neutral-900 dark:text-white transition-all">
+    <div className="py-12 px-10 min-h-screen bg-white dark:bg-neutral-900 dark:text-white transition-all">
       {countryData === null ? (
         <div className="flex justify-center items-center h-full">
           <p className="text-lg text-gray-700 dark:text-gray-300">Loading...</p>
