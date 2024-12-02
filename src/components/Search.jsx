@@ -6,7 +6,7 @@ export default function Search({ setSearchQuery }) {
     setSearchQuery(event.target.value);
   };
   return (
-    <div className="w-[1500px] h-16 text-[#757575] text-2xl font-bold font-jakarta flex items-center justify-between border rounded-full px-4 shadow-lg dark:bg-neutral-600">
+    <div className="w-full h-16 text-[#757575] text-2xl font-bold font-jakarta flex items-center justify-between border rounded-full px-4 shadow-lg dark:bg-neutral-600">
       <input
         type="text"
         onChange={handleChange}
