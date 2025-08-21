@@ -7,22 +7,27 @@ export default function CountriesList({ searchQuery, region }) {
     fetch("https://restcountries.com/v3.1/all")
       .then((res) => res.json())
       .then((data) => {
-        setAllCountries(data);
-      });
+        if (Array.isArray(data)) {
+          setAllCountries(data);
+        } else {
+          setAllCountries([]);
+        }
+      })
+      .catch(() => setAllCountries([]));
   }, []);
   return (
     <div className="">
-      {allCountries.length !== 0 ? (
+      {Array.isArray(allCountries) && allCountries.length !== 0 ? (
         <div className="flex flex-wrap items-center justify-center">
           {allCountries
             .filter((country) => {
-              return country.name.common
-                .toLowerCase()
+              return country.name?.common
+                ?.toLowerCase()
                 .includes(searchQuery.toLowerCase());
             })
             .filter((country) => {
               return country.region
-                .toLowerCase()
+                ?.toLowerCase()
                 .includes(region.toLowerCase());
             })
             .map((country) => {
@@ -34,6 +39,7 @@ export default function CountriesList({ searchQuery, region }) {
                     flag={country.flags.svg}
                     capital={country.capital}
                     region={country.region}
+                    data={country}
                   />
                 </Fragment>
               );
