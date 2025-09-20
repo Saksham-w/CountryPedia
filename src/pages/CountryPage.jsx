@@ -1,3 +1,4 @@
+import { data } from "autoprefixer";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 
@@ -36,6 +37,7 @@ export default function CountryPage() {
         functionToSetCountryData(data);
       });
   }, [country]);
+  console.log(countryData)
 
   return (
     <div className="py-12 px-10 min-h-screen bg-white dark:bg-neutral-900 dark:text-white transition-all">
@@ -67,7 +69,7 @@ export default function CountryPage() {
               </h4>
               <h4>
                 <span className="font-semibold">Capital: </span>
-                {countryData.capital || "N/A"}
+                {countryData.capital?.[0] || "N/A"}
               </h4>
               <h4>
                 <span className="font-semibold">Region: </span>
@@ -83,19 +85,24 @@ export default function CountryPage() {
               </h4>
               <h4>
                 <span className="font-semibold">Top Level Domain: </span>
-                {countryData.tld[0]}
+                {countryData.tld?.[0] || "N/A"}
               </h4>
               <h4>
                 <span className="font-semibold">Currencies: </span>
-                {Object.values(countryData.currencies).map((obj, index) => (
-                  <span key={index}>
-                    {obj.name} ({obj.symbol})
-                  </span>
-                ))}
+                {countryData.currencies
+                  ? Object.values(countryData.currencies).map((obj, index) => (
+                      <span key={index}>
+                        {obj.name} ({obj.symbol})
+                        {index < Object.values(countryData.currencies).length - 1 ? ", " : ""}
+                      </span>
+                    ))
+                  : "N/A"}
               </h4>
               <h4>
                 <span className="font-semibold">Languages: </span>
-                {Object.values(countryData.languages).join(", ")}
+                {countryData.languages
+                  ? Object.values(countryData.languages).join(", ")
+                  : "N/A"}
               </h4>
             </div>
 
